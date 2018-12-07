@@ -36,15 +36,19 @@ def Charge(Name, NameNum, pKa, pH):
 def identify_pH(pdbName):
     """ This subroutine identifies the experimental crystallization pH in the Template PDB 
     """
-    pH_Exp= 'N.A.'
+    pH_Exp= 'NULL'
     with open(pdbName) as pdbFile:
         for line in pdbFile:
             if 'REMARK' in line and 'PH       ' in line:
-                pH_Exp = float(line.split()[4])                                                                                                                                               
+                if line.split()[4] == "NULL":
+                    pH_Exp = "NULL"
+                    print("--> The experimental crystallization pH is not reported in the Template PDB.")
+                else:
+                    pH_Exp = float(line.split()[4])                                                                                                                                               
                 globals().update({ "pH_Exp"  : str(pH_Exp)})                                                                         
                 return
             else:
-                pH_Exp= 'N.A.'
+                pH_Exp= 'NULL'
                 globals().update({ "pH_Exp"  : str(pH_Exp)})                                                                         
                 continue
 
