@@ -1,6 +1,6 @@
 import os
 
-def countPosNeg(pdbARM,aa1, aa2, aa3, aa4, Charge, List):
+def countPosNeg(pdbARM,aa1, aa2, aa3, aa4, ION, Charge, List):
     from initial_Setup import counterion_ID, linker_aa_ID, second_counterion_ID
 
     global topCharge, bottomCharge
@@ -16,6 +16,30 @@ def countPosNeg(pdbARM,aa1, aa2, aa3, aa4, Charge, List):
     with open(pdbARM) as file:
         for line in file:
             if (aa1 in line or aa2 in line or aa3 in line or aa4 in line) and "CA" in line: #The linker_aa and main_counterion should be conserved in cases where one of them is protonated 
+                if signlinker_aa > 0:
+                    resta = (float(line.split()[8]) - float(signlinker_aa))
+                    if  (float(line.split()[8]) - float(signlinker_aa)) > 0:
+                        topCharge = topCharge + 1
+                        topList.append(line.split()[5])
+                        print( line.split()[3]+"\t"+line.split()[5]+"\t"+"TOP"+"\t"+str(float(resta)))
+                    else:
+                        print( line.split()[3]+"\t"+line.split()[5]+"\t"+"BOTTOM"+"\t"+str(float(resta)))
+                        bottomCharge = bottomCharge + 1
+                        bottomList.append(line.split()[5])
+                if signlinker_aa < 0:
+                    resta = (float(line.split()[8]) - float(signlinker_aa))
+                    if  (float(line.split()[8]) - float(signlinker_aa)) < 0:
+                        topCharge = topCharge + 1
+                        topList.append(line.split()[5])
+                        print( line.split()[3]+"\t"+line.split()[5]+"\t"+"TOP"+"\t"+str(float(resta)))
+                    else:
+                        print( line.split()[3]+"\t"+line.split()[5]+"\t"+"BOTTOM"+"\t"+str(float(resta)))
+                        bottomCharge = bottomCharge + 1
+                        bottomList.append(line.split()[5])
+#For CL- ions
+    with open(pdbARM) as file:
+        for line in file:
+            if ION in line: #The linker_aa and main_counterion should be conserved in cases where one of them is protonated 
                 if signlinker_aa > 0:
                     resta = (float(line.split()[8]) - float(signlinker_aa))
                     if  (float(line.split()[8]) - float(signlinker_aa)) > 0:
@@ -89,8 +113,8 @@ This subroutine is designed to compute the number of positively and negatively c
 
 
 
-    countPosNeg(pdbARM,"ARG", "HIS", "LYS", "HIP", "Positive", "PosList")
-    countPosNeg(pdbARM,"ASP", "GLU", "ASP", "GLU", "Negative", "NegList")
+    countPosNeg(pdbARM,"ARG", "HIS", "LYS", "HIP", "NA", "Positive", "PosList")
+    countPosNeg(pdbARM,"ASP", "GLU", "ASP", "GLU", "CL", "Negative", "NegList")
 
     TotalTop = topPositive + (topNegative*-1)
     TotalBottom = bottomPositive + (bottomNegative*-1)

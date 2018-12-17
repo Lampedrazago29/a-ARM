@@ -83,7 +83,10 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
 
                         if this_resNum != next_resNum:  
                             print("--> The following gaps have been identified:", this_resNum, " to ",  next_resNum)
+#Descomentar
+                            
                             newfile.writelines("TER \n")
+####
         newfile.write("TER \n")
 
         #For writing the chromophore
@@ -96,8 +99,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                                     float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
                 newfile.writelines(line+"\n")
         newfile.write("TER \n")
-        
-
+#        
         #For writing the waters
         resNumHOH = resNumChr # Residue sequence number        
         for line in oldfile_read:
@@ -110,13 +112,20 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                 line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumHOH), str(""), float(ls[6]), 
                                     float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
                 newfile.writelines(line+"\n")
-            if "HOH" in line and "HW" in line and ls[5]==orgResNum:
-                resNumHOH1=resNumHOH
-                line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumHOH1), str(""), float(ls[6]), 
-                                        float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
-                newfile.writelines(line+"\n")
                 
         newfile.write("TER \n")
+
+#LMPG 13-12-18 Include the CL ions which are part of the X-ray structure (i.e. 5B2N)
+        #For writing the Cl- ions
+        for line in oldfile_read:    
+            ls = line.split()
+            if 'CL' in line:
+                resNumHOH = resNumHOH+1
+                ln = ln+1
+                line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumHOH), str(""), float(ls[6]), 
+                                    float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
+                newfile.writelines(line+"\n")
+        #        
 #
 #        os.remove(oldFile)
         shutil.move(newFile, FinalFile)
