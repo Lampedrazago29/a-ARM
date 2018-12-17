@@ -207,32 +207,40 @@ def PutIon(pdbARM):
         infoIon.write(putIon+" << EOF \n")
         infoIon.write(pqrARM+"\n")
         infoIon.write(str(TotalTop)+"\n")
-        if TotalTop > 0:
-            infoIon.write(str(len(topPosList))+"\n")
-            for i in range(0,len(topPosList)):
-                #                    infoIon.write(str(topPosList[i])+"\n")
-                infoIon.write(str(topPosList[i])+"\n")
-            TargetInner = sorted(list(set(topPosList).difference(cavityList)))
-#topPosList
+
+        if TotalTop == 0:
+            pass
         else:
-            infoIon.write(str(len(topNegList))+"\n")
-            for i in range(0,len(topNegList)):
-                infoIon.write(str(topNegList[i])+"\n")
-            TargetInner = sorted(list(set(topNegList).difference(cavityList)))
+            if TotalTop > 0:
+                infoIon.write(str(len(topPosList))+"\n")
+                for i in range(0,len(topPosList)):
+                #                    infoIon.write(str(topPosList[i])+"\n")
+                    infoIon.write(str(topPosList[i])+"\n")
+                TargetInner = sorted(list(set(topPosList).difference(cavityList)))
+#topPosList
+            else:
+                infoIon.write(str(len(topNegList))+"\n")
+                for i in range(0,len(topNegList)):
+                    infoIon.write(str(topNegList[i])+"\n")
+                TargetInner = sorted(list(set(topNegList).difference(cavityList)))
 #topNegList
 #outer
         infoIon.write(str(TotalBottom)+"\n")
-        if TotalBottom > 0:
-            infoIon.write(str(len(bottomPosList))+"\n")
-            for i in range(0,len(bottomPosList)):
-                infoIon.write(str(bottomPosList[i])+"\n")
-            TargetOuter = sorted(list(set(bottomPosList).difference(cavityList)))
-#bottomPosList
+        if TotalBottom == 0:
+            pass
         else:
-            infoIon.write(str(len(bottomNegList))+"\n")
-            for i in range(0,len(bottomNegList)):
-                infoIon.write(str(bottomNegList[i])+"\n")
-            TargetOuter = sorted(list(set(bottomNegList).difference(cavityList)))
+
+            if TotalBottom > 0:
+                infoIon.write(str(len(bottomPosList))+"\n")
+                for i in range(0,len(bottomPosList)):
+                    infoIon.write(str(bottomPosList[i])+"\n")
+                TargetOuter = sorted(list(set(bottomPosList).difference(cavityList)))
+#bottomPosList
+            else:
+                infoIon.write(str(len(bottomNegList))+"\n")
+                for i in range(0,len(bottomNegList)):
+                    infoIon.write(str(bottomNegList[i])+"\n")
+                TargetOuter = sorted(list(set(bottomNegList).difference(cavityList)))
 
             globals().update({"TargetInner" : TargetInner})
             globals().update({"TargetOuter" : TargetOuter})
