@@ -28,7 +28,7 @@ def searchRotamers(newFile = "TempFile"):
                 if question == True:
                     replaceLine(pdbARMTemp, conformerName, conformerResNum, { conformerName : " "+str(conformerName)[+-3:]}, newFile, False)
                     shutil.move(newFile, pdbARMTemp)
-                    print("---> The "+"\x1b[0;33;49m"+str(conformerName+" "+conformerResNum)+'\x1b[0m'+" will be KEEPED.")
+                    print("---> The "+"\x1b[0;33;49m"+str(conformerName+" "+conformerResNum)+'\x1b[0m'+" will be KEPT.")
                 else:
                     deleteLine(pdbARMTemp, conformerName, conformerResNum, { conformerName : " "+str(conformerName)[+-3:]}, newFile)
                     print("---> The "+"\x1b[0;33;49m"+str(conformerName+" "+conformerResNum)+'\x1b[0m'+" will be REMOVED.")
