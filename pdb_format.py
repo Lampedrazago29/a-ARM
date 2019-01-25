@@ -125,6 +125,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                                     float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
                 newfile.writelines(line+"\n")
         #        
+        newfile.write("TER \n")
 #
 #        os.remove(oldFile)
         shutil.move(newFile, FinalFile)
