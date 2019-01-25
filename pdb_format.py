@@ -33,8 +33,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                     resNumList1 = sorted(list(set(resNumList)))                
     
     missResList = [] # This is the list of missing residues
-    for i in range(0,resNumList1[-1]):
-            i = i+1
+    for i in range(1,resNumList1[-1]+1):
             if i not in resNumList1:
                 missResList.append(i)
                 
