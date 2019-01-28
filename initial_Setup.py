@@ -40,6 +40,14 @@ def createpdbARM():
                '$sel writepdb ' +pdbARM+' \n']
     
     VMDTempFile("centerVMD", string0, "center",  False)
+    
+    # we remove hydrogen atoms if present
+    stringH = ['mol load pdb ' +pdbARM+ ' \n',  
+               'set sel [atomselect top \"not hydrogen\" ]\n',
+               '$sel writepdb ' +pdbARM+ ' \n']
+    
+    VMDTempFile("centerVMD", stringH, "center", False)
+    
     FormatPDB1(pdbARM, pdbARMTemp) # The *ARM.pdb file is re-written with the columns separated by tabs 
     
 ##################################################                                                                              
