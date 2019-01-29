@@ -3,7 +3,7 @@ import numpy as np
 import lib
 import shutil
 from lib import PickNumber, ChooseNumOption, yes_no, replaceLine
-
+from add_heavy_atoms import add_Heavy_atoms
 
 ##################################################                                                                                                                                          
 # Luca's proposal to calculate the charge                                                                                                                                                  
