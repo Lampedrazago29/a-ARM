@@ -119,7 +119,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
         anyCl = False
         for line in oldfile_read:    
             ls = line.split()
-            if 'CL' in line:
+            if ' CL ' in line:
                 anyCl = True
                 resNumHOH = resNumHOH+1
                 ln = ln+1
