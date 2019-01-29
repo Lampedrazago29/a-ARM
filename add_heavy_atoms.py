@@ -3,9 +3,14 @@ def add_Heavy_atoms():
     """ This subroutine identifies the geometry of the missing heavy atoms present in the file "missing-atoms.dat". 
     Then, the geometry corresponding to each missing heavy atom is placed in the correct place in the pdbARM file. 
     """
-    from initial_Setup import pdbARM
-    from lib import chainName
+    
+    import initial_Setup
+    import download_PDB
+    import pdb_format
 
+    from initial_Setup import pdbARM
+    from lib import chainName, FormatPDB1
+    from pdb_format import FormatPDB
 
     pdbARM_TER = pdbARM+".temp2"
 
