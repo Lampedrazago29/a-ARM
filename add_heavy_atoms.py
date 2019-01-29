@@ -1,4 +1,6 @@
 
+import os
+
 def add_Heavy_atoms():
     """ This subroutine identifies the geometry of the missing heavy atoms present in the file "missing-atoms.dat". 
     Then, the geometry corresponding to each missing heavy atom is placed in the correct place in the pdbARM file. 
