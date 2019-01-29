@@ -7,7 +7,7 @@ import initial_Setup
 def searchRotamers(newFile = "TempFile"):
     """ This function identify the residues with different rotamers and ask the user for select the correct one """   
 
-    from Lists_dictionaries import rmList
+    from Lists_dictionaries import rmList, aaList
     from initial_Setup import pdbARMTemp
 
     occupancyList1 = []
