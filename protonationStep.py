@@ -3,7 +3,7 @@ import numpy as np
 import lib
 import shutil
 from lib import PickNumber, ChooseNumOption, yes_no, replaceLine
-from add_heavy_atoms import add_Heavy_atoms
+#from add_heavy_atoms import add_Heavy_atoms
 
 ##################################################                                                                                                                                          
 # Luca's proposal to calculate the charge                                                                                                                                                  
@@ -85,11 +85,11 @@ def propKa(pdbName,pdbARM):
     globals().update({"pdbARMFix": pdbARMFix })                
 
 #Create a new file "missing-atoms.dat" with information on the missing heavy atoms. This file is then used in the module add_heavy_atoms.py    
-    os.system(pdb2pqr+" --chain --ff="+ForceFieldName+" --with-ph="+str(pH)+"  --ph-calc-method=propka --summary -v "+str(pdbARM+" "+pdbARMFix)+" >> missing-atoms.dat")
+    os.system(pdb2pqr+" --chain --ff="+ForceFieldName+" --with-ph="+str(pH)+"  --ph-calc-method=propka --summary -v "+str(pdbARM+" "+pdbARMFix))#+" >> missing-atoms.dat")
     print( '\n', str('Running PROPKA3.0 analysis for the \x1b[0;33;49m'+str(pdbARM)+'\x1b[0m input file').rjust(100, '.'))
     
 #### This subroutine add the geometry of the heavy atoms for incomplete residues                                                                                                                                                                                           
-    add_Heavy_atoms()
+#    add_Heavy_atoms()
 ###
 
     os.system (propkaScript+" --pH="+str(pH)+" "+pdbARMFix+ ">> /dev/null")
