@@ -113,8 +113,8 @@ This subroutine is designed to compute the number of positively and negatively c
 
 
 
-    countPosNeg(pdbARM,"ARG", "HIS", "LYS", "HIP", "NA", "Positive", "PosList")
-    countPosNeg(pdbARM,"ASP", "GLU", "ASP", "GLU", "CL", "Negative", "NegList")
+    countPosNeg(pdbARM,"ARG", "HIS", "LYS", "HIP", " NA ", "Positive", "PosList")
+    countPosNeg(pdbARM,"ASP", "GLU", "ASP", "GLU", " CL ", "Negative", "NegList")
 
     TotalTop = topPositive + (topNegative*-1)
     TotalBottom = bottomPositive + (bottomNegative*-1)
