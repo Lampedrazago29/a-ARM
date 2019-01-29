@@ -5,7 +5,7 @@ import Lists_dictionaries
 import shutil
 
 from add_heavy_atoms import add_Heavy_atoms
-from external_Software import pdb2pqr
+
 ##################################################                                                                              
 # SearchChain
 ##################################################                                                                            
@@ -132,10 +132,6 @@ def alignRotAxis():
     from Lists_dictionaries import aaList
 #    from initial_Setup import pdbARM 
 
-    ForceFieldName = "amber"  
-    pdbARMFix = pdbARM[:-3]+'fix.pdb'   
-    #Create a new file "missing-atoms.dat" with information on the missing heavy atoms. This file is then used in the module add_heavy_atoms.py    
-    os.system(pdb2pqr+" --chain --ff="+ForceFieldName+"  --ph-calc-method=propka --summary -v "+str(pdbARM+" "+pdbARMFix)+" >> missing-atoms.dat")
 #### This subroutine add the geometry of the heavy atoms for incomplete residues                                                                                                                                                                                           
     add_Heavy_atoms()
 ###
