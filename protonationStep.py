@@ -84,9 +84,10 @@ def propKa(pdbName,pdbARM):
 
     globals().update({"pdbARMFix": pdbARMFix })                
 
-    os.system(pdb2pqr+" --chain --ff="+ForceFieldName+" --with-ph="+str(pH)+"  --ph-calc-method=propka --summary "+str(pdbARM+" "+pdbARMFix))
-
+#Create a new file "missing-atoms.dat" with information on the missing heavy atoms. This file is then used in the module add_heavy_atoms.py    
+    os.system(pdb2pqr+" --chain --ff="+ForceFieldName+" --with-ph="+str(pH)+"  --ph-calc-method=propka --summary -v "+str(pdbARM+" "+pdbARMFix)+" >> missing-atoms.dat")
     print( '\n', str('Running PROPKA3.0 analysis for the \x1b[0;33;49m'+str(pdbARM)+'\x1b[0m input file').rjust(100, '.'))
+    
     os.system (propkaScript+" --pH="+str(pH)+" "+pdbARMFix+ ">> /dev/null")
     print( str("Done! The files \x1b[0;33;49m"+pdbARM[:-3]+"propka_input\x1b[0m and \x1b[0;33;49m"+pdbPropka+"\x1b[0m has been generated. ").rjust(100, '.'))
 
