@@ -14,7 +14,7 @@ def searchRotamers(newFile = "TempFile"):
     occupancyList = []
     with open(pdbARMTemp, "r") as pdbTemp:
         for line in pdbTemp:
-            if 'ATOM' in line and float(line.split()[9]) < 1.0 and line.split()[3] not in rmList:
+            if 'ATOM' in line and float(line.split()[9]) < 1.0 and line.split()[3] not in rmList and line.split()[3] not in aaList:
                 occupancyList1.append(line.split()[3]+" "+line.split()[5]+" Ocuppancy= "+line.split()[9])
                 occupancyList = sorted(list(set(occupancyList1)))
         ChooseNumOption(occupancyList,"", ":", '\n The following residues have multiple conformations', '', '', False, "")
