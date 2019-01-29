@@ -116,16 +116,19 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
 
 #LMPG 13-12-18 Include the CL ions which are part of the X-ray structure (i.e. 5B2N)
         #For writing the Cl- ions
+        anyCl = False
         for line in oldfile_read:    
             ls = line.split()
             if 'CL' in line:
+                anyCl = True
                 resNumHOH = resNumHOH+1
                 ln = ln+1
                 line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumHOH), str(""), float(ls[6]), 
                                     float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
                 newfile.writelines(line+"\n")
         #        
-        newfile.write("TER \n")
+        if anyCl:
+          newfile.write("TER \n")
 #
 #        os.remove(oldFile)
         shutil.move(newFile, FinalFile)
