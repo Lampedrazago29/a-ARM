@@ -21,7 +21,7 @@ def searchRotamers(newFile = "TempFile"):
         pdbTemp.seek(0)
 
         for line in pdbTemp:
-            if 'ATOM' in line and ('CA' in line  or 'C1 ' in line) and float(line.split()[9]) < 1.0 and line.split()[3] not in rmList:
+            if 'ATOM' in line and ('CA' in line  or 'C1 ' in line) and float(line.split()[9]) < 1.0 and line.split()[3] not in rmList and line.split()[3] not in aaList:
                 conformerName = line.split()[3]
                 conformerResNum = line.split()[5]
                 question= yes_no('\n <-> Do you want to keep the residue '+conformerName+' '+conformerResNum+"? ("+"Ocuppancy= "+line.split()[9]+")")
