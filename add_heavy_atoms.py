@@ -11,9 +11,16 @@ def add_Heavy_atoms():
     from initial_Setup import pdbARM
     from lib import chainName, FormatPDB1
     from pdb_format import FormatPDB
+    
+    from external_Software import pdb2pqr
 
     pdbARM_TER = pdbARM+".temp2"
 
+    ForceFieldName = "amber"  
+    pdbARMFix = pdbARM[:-3]+'fix.pdb'   
+    #Create a new file "missing-atoms.dat" with information on the missing heavy atoms. This file is then used in the module add_heavy_atoms.py    
+    os.system(pdb2pqr+" --chain --ff="+ForceFieldName+"  --ph-calc-method=propka --summary -v "+str(pdbARM+" "+pdbARMFix)+" >> missing-atoms.dat")
+    
     pdbFormat = "%-6s%5d %s %-4s%3s %s%4d %3s%8.3f%8.3f%8.3f%6.2f%s%6.2f %11s" # Standard PDB format                                                                                                                                                                                                                          
 
     #This is the list with the incomplete residues
