@@ -14,7 +14,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
     format required by the ARM protocol. """
 
     from Lists_dictionaries import aaList
-    from lib import chromophoreName
+    from chromophore import chromophoreName
     from initial_Setup import pdbARMTemp, pdbARM
     from download_PDB import TitlePDB
 
