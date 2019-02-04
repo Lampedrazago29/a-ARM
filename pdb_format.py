@@ -4,6 +4,7 @@ import Lists_dictionaries
 import inspect
 import initial_Setup
 import download_PDB
+import chromophore
 
 def lineno():
     """Returns the current line number in our program."""
@@ -14,7 +15,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
     format required by the ARM protocol. """
 
     from Lists_dictionaries import aaList
-    from lib import chromophoreName
+    from chromophore import chromophoreName
     from initial_Setup import pdbARMTemp, pdbARM
     from download_PDB import TitlePDB
 
@@ -86,15 +87,17 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                             newfile.writelines("TER \n")
         newfile.write("TER \n")
 
-        #For writing the chromophore
-        for line in oldfile_read:    
-            ls = line.split()
-            if chromophoreName in line:
-                resNumChr = resNum+1
-                ln = ln+1
-                line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumChr), str(""), float(ls[6]), 
-                                    float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
-                newfile.writelines(line+"\n")
+        #For writing the chromophore                                                                                              
+        for i in range(1,21):
+            for line in oldfile_read:
+                ls = line.split()
+                # To order the chromophore atoms which come from LYR                                                              
+                if chromophoreName in line and ("C"+str(i)+"\t" in line or "C"+str(i)+" \t" in line):
+                    resNumChr = resNum+1
+                    ln = ln+1
+                    line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumChr), str(""), float(ls[6]),
+                                        float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
+                    newfile.writelines(line+"\n")
         newfile.write("TER \n")
         
 
