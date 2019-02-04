@@ -82,7 +82,7 @@ def SearchLinkerAA(diffPar = 1.5):
     chromophore. Therefore, the criteria for identifying the linker atom and the linker amino acid is to find the 
     closest pair of atoms considering the x, y and z coordinates. """
 
-    from lib import chromophoreName
+    from chromophore import chromophoreName
     from Lists_dictionaries import aaList
 
     numAtomsChr = 0
