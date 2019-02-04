@@ -2,7 +2,7 @@
 #pyMoL Figures generator                                                                                                                              
 ##################################################                                                                                                                                                                                                                                                                                                                   
 def pyMoLFig(pdbARM,cavityList):
-    from lib import chainName, chromophoreName
+    from chromophore import chainName, chromophoreName
     from initial_Setup import linker_aa_ID, counterion_ID
     from counterions_Placement import TargetInner_pymol, TargetOuter_pymol
 
