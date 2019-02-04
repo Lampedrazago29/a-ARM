@@ -128,7 +128,8 @@ def alignRotAxis():
     """ This subroutine, designed by Dr. Luca De Vico, is a function which allows to align the geometry of the complex
     protein+chromophore in the center of mass of the chromophore and to oriente it along the Z axis, using the VMD package """
 
-    from lib import chainName, chromophoreName
+    from lib import chainName
+    from chromophore import chromophoreName
     from Lists_dictionaries import aaList
 #    from initial_Setup import pdbARM 
 
