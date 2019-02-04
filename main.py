@@ -15,6 +15,7 @@ from cavity_fpocket import *
 from counterions_Placement import *
 from mutate_PDB import *
 from pymol_Script import *
+from chromophore import LYR_to_RET
 
 def main():
     t0 = time.time()
@@ -26,6 +27,7 @@ def main():
     createpdbARM()
     searchRotamers()
     SearchChromophore()
+    LYR_to_RET()
     FormatPDB(initial_Setup.pdbARMTemp, initial_Setup.pdbARM, initial_Setup.pdbARM, download_PDB.TitlePDB)
     alignRotAxis()
     FormatPDB1( initial_Setup.pdbARM, initial_Setup.pdbARMTemp )
