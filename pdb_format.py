@@ -88,15 +88,17 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
 ####
         newfile.write("TER \n")
 
-        #For writing the chromophore
-        for line in oldfile_read:    
-            ls = line.split()
-            if chromophoreName in line:
-                resNumChr = resNum+1
-                ln = ln+1
-                line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumChr), str(""), float(ls[6]), 
-                                    float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
-                newfile.writelines(line+"\n")
+        #For writing the chromophore                                                                                              
+        for i in range(1,21):
+            for line in oldfile_read:
+                ls = line.split()
+                # To order the chromophore atoms which come from LYR                                                              
+                if chromophoreName in line and ("C"+str(i)+"\t" in line or "C"+str(i)+" \t" in line):
+                    resNumChr = resNum+1
+                    ln = ln+1
+                    line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumChr), str(""), float(ls[6]),
+                                        float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
+                    newfile.writelines(line+"\n")
         newfile.write("TER \n")
 #        
         #For writing the waters
