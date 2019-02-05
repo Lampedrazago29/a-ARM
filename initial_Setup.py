@@ -197,7 +197,8 @@ def FindCounterIons(linker_aa_ID):
 
     counterionsfilename = "output_counter_ions.dat"
     string0 = ['mol load pdb %s \n' % pdbARMTemp,
-               'set negatives [atomselect top \"(resname GLU or resname ASP) and type CG\" ]\n',
+#               'set negatives [atomselect top \"(resname GLU or resname ASP) and type CG\" ]\n',
+               'set negatives [atomselect top \"((resname GLU or resname ASP) and type CG) or resname CL\" ]\n',
                'set linker [[atomselect top \"resid ' + linker_aa_ID + ' and type NZ\"] list]\n',
                'set outfile [open ' + counterionsfilename +  ' w]\n',
                'puts $outfile [$negatives get {resname resid}]\n',
