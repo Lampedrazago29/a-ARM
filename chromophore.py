@@ -19,7 +19,7 @@ def LYR_to_RET():
 
 
     if chromophoreName == "LYR":
-        FormatPDB1(pdbARM, pdbARMTemp ) #Temporal file with spaces                                                                                                                                                                            
+#        FormatPDB1(pdbARM, pdbARMTemp ) #Temporal file with spaces                                                                                                                                                                            
 
         pdbARMTemp1 = pdbARMTemp+".1"
 
