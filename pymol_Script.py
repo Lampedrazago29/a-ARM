@@ -14,7 +14,7 @@ def pyMoLFig(pdbARM,cavityList):
         pyMoLScript.writelines(["from pymol import cmd,stored \n",
                                 "bg_color white \n",
                                 "load "+pdbARM+" \n",
-                                "set auto_zoom, off \n"
+                                "set auto_zoom, off \n",
                                 "hide everything \n",
                                 "hide cartoon, all \n",
                                 "hide spheres, all \n",
