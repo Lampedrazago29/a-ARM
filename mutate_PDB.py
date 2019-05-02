@@ -295,18 +295,19 @@ def modeller_mutations(mut_pdbARM):
     from download_PDB import TitlePDB
     from external_Software import template
 
+    shutil.copyfile(template+"mutate_model.py", "mutate_model.py")
+    script_modeller_mutation = "mutate_model.py"
+
     print("mutation_seqmut", mutation_seqmut)
     for i in range(0,len(mutation_seqmut)):
         NumIDmut = NumIDmutationsList[i]
         globals().update({"NumIDmut" : NumIDmut})
         ResMutName = mutation_seqmut[i][-3:]
 
-    shutil.copyfile(template+"mutate_model.py", "mutate_model.py")
-    script_modeller_mutation = "mutate_model.py"
 
-    print("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
-    os.system("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
-    print( "\n The mutation ", mutation_seqmut[i], "has been succesfully generated!")
+        print("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
+        os.system("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
+        print( "\n The mutation ", mutation_seqmut[i], "has been succesfully generated!")
 
 #Move the output pdb of modeller to mut_pdbARMTemp
     shutil.move(mut_pdbARM+"_"+str(ResMutName)+str(NumIDmut)+".pdb",mutation_output)
