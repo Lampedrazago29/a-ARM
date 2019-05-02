@@ -20,7 +20,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
 
     global resNumChr # New assigned residue sequence number of the chromophore 
 
-    #Identify gaps
+   #Identify gaps
 
     resNumList = []
     resNumList1 = []
@@ -113,7 +113,7 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                                         float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
                     newfile.writelines(line+"\n")
     
-            newfile.write("TER \n")
+        newfile.write("TER \n")
 
         #For writing the waters
         resNumHOH = resNumChr # Residue sequence number        

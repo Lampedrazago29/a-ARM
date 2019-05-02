@@ -310,20 +310,20 @@ def modeller_mutations(mut_pdbARM):
         print( "\n The mutation ", mutation_seqmut[i], "has been succesfully generated!")
 
 #Move the output pdb of modeller to mut_pdbARMTemp
-    shutil.move(mut_pdbARM+"_"+str(ResMutName)+str(NumIDmut)+".pdb",mutation_output)
+        shutil.move(mut_pdbARM+"_"+str(ResMutName)+str(NumIDmut)+".pdb",mutation_output)
 
 #Fix the format of the mutation_ouput file                                                                                                                                                                                            
-    FormatPDB1(mutation_output, "mut_temp")
+        FormatPDB1(mutation_output, "mut_temp")
 
-    with open("mut_temp", "r") as out, open("mutation_output", "w") as temp:
-        for line in out:
-            if "ATOM" in line:
-                temp.writelines(line.split()[0]+"\t"+line.split()[1]+"\t"+line.split()[2]+"\t"+line.split()[3]+"\t"+line.split()[4]+"\t"+line.split()[5]+"\t"+line.split()[6]+"\t"+line.split()[7]+"\t"+line.split()[8]+"\t"+line.split()[9]+"\t"+str("0.0")+"\t"+line.split()[2][:1]+"\n")
-    FormatPDB("mutation_output", mutation_output, mutation_output,TitlePDB)
-    os.remove("mut_temp")
+        with open("mut_temp", "r") as out, open("mutation_output", "w") as temp:
+            for line in out:
+                if "ATOM" in line:
+                    temp.writelines(line.split()[0]+"\t"+line.split()[1]+"\t"+line.split()[2]+"\t"+line.split()[3]+"\t"+line.split()[4]+"\t"+line.split()[5]+"\t"+line.split()[6]+"\t"+line.split()[7]+"\t"+line.split()[8]+"\t"+line.split()[9]+"\t"+str("0.0")+"\t"+line.split()[2][:1]+"\n")
+        FormatPDB("mutation_output", mutation_output, mutation_output,TitlePDB)
+        os.remove("mut_temp")
 
-    MutatedToARMFormat(mut_pdbARM,NumIDmut, chainName)
-    os.system("pwd")
+        MutatedToARMFormat(mut_pdbARM,NumIDmut, chainName)
+        os.system("pwd")
 
 #############################                                                                                                                                                                                    
 #
