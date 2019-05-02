@@ -74,10 +74,6 @@ def SearchChromophore(type = "chromophore", pick = True, group = 'ATOM'):
 ##################################################                                                                              
 # SearchLinkerAA
 ##################################################                                                                        
-
-#Choose between Lysine bounded chromophore and cysteine bounded chromophore
-    ChooseNumOption(["LYS", "CYS"],"type_linker", "type_linker", '\n Please, select the type of amino acid covalently linked to the chromophore:', ' ', 'is selected as the '+"type_linker", pick = True)
-
 def SearchLinkerAA(diffPar = 1.5):
     """ This function is designed to simultaneously identify the linker atom of the chromophore and the linker amino acid residue. 
     To this aim, the x, y and z coordinates of the atoms of the chromophoreName are stored in individual lists 
@@ -88,9 +84,7 @@ def SearchLinkerAA(diffPar = 1.5):
 
     from chromophore import chromophoreName
     from Lists_dictionaries import aaList
-    from lib import type_linkerName
 
-#Condition for linker atom search, based on the type of linker aa
     numAtomsChr = 0
     with open(pdbARMTemp) as file:
         coordXChr = []
@@ -111,22 +105,20 @@ def SearchLinkerAA(diffPar = 1.5):
 
     with open(pdbARMTemp) as file:
         for line in file:
-            if type_linkerName in line and ("NZ" in line.split()[2] or "SG" in line.split()[2]):
-                for j in range(0, len(coordXChr)):                    
-                    diffX = float(abs((float(line.split()[6])) - coordXChr[j]))
-                    diffY = float(abs((float(line.split()[7])) - coordYChr[j]))
-                    diffZ = float(abs((float(line.split()[8])) - coordZChr[j]))
-                    
-                    if diffX < diffPar and diffY < diffPar and diffZ < diffPar:
-                        linker_aa_ID = line.split()[5]
-                        linker_aa = str(line.split()[3]+" "+linker_aa_ID)
-                        type_linker_atom = str(line.split()[2])
-                        globals().update({"linker_aa_ID" : linker_aa_ID})
-                        globals().update({"linker_aa" : linker_aa})
-                        globals().update({"type_linker_atom" : type_linker_atom})
+            for i in range(0, len(aaList)):
+                if aaList[i] in line and ("NZ" in line.split()[2] or "O" in line.split()[2]):
+                    for j in range(0, len(coordXChr)):                    
+                        diffX = float(abs((float(line.split()[6])) - coordXChr[j]))
+                        diffY = float(abs((float(line.split()[7])) - coordYChr[j]))
+                        diffZ = float(abs((float(line.split()[8])) - coordZChr[j]))
+                        if diffX < diffPar and diffY < diffPar and diffZ < diffPar:
+                            linker_aa_ID = line.split()[5]
+                            linker_aa = str(line.split()[3]+" "+linker_aa_ID)
+                            globals().update({"linker_aa_ID" : linker_aa_ID})
+                            globals().update({"linker_aa" : linker_aa})
         
-                        coordXYZChr = [coordXChr[j], coordYChr[j], coordZChr[j]]
-                        globals().update({"coordXYZChr" : coordXYZChr})
+                            coordXYZChr = [coordXChr[j], coordYChr[j], coordZChr[j]]
+                            globals().update({"coordXYZChr" : coordXYZChr})
     print("The linker amino acid is:", linker_aa)
 
 ##################################################                                                                              
@@ -192,21 +184,22 @@ def alignRotAxis():
     print( "\n ---> The chromophore label has been changed to: ", '\x1b[0;33;49m'+str(chromophoreName)+" "+str(resNumChr)+'\x1b[0m')
 #identify the linker atom and the linker amino acid
     SearchLinkerAA()
-    FindCounterIons(linker_aa_ID,type_linker_atom)
+    FindCounterIons(linker_aa_ID)
     print( "\n ----> The", '\x1b[0;33;49m'+str(pdbARM)+'\x1b[0m', "ARM input file has been generated.")
 
 ##################################################                                                                                       
 #This function locates the two nearest possible counterions to the RET                                                                     
 #Luca De Vico                                                                                                                    
 ##################################################                                                                                                 
-def FindCounterIons(linker_aa_ID,type_linker_atom):
+def FindCounterIons(linker_aa_ID):
 
     from lib import chainName
 
     counterionsfilename = "output_counter_ions.dat"
     string0 = ['mol load pdb %s \n' % pdbARMTemp,
+#               'set negatives [atomselect top \"(resname GLU or resname ASP) and type CG\" ]\n',
                'set negatives [atomselect top \"((resname GLU or resname ASP) and type CG) or resname CL\" ]\n',
-               'set linker [[atomselect top \"resid ' + linker_aa_ID + ' and type ' + str(type_linker_atom) + '\"] list]\n',
+               'set linker [[atomselect top \"resid ' + linker_aa_ID + ' and type NZ\"] list]\n',
                'set outfile [open ' + counterionsfilename +  ' w]\n',
                'puts $outfile [$negatives get {resname resid}]\n',
                'foreach coord [atomselect0 list] {\n',

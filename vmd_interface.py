@@ -23,7 +23,6 @@ def VMDTempFile(tempName, content, position, default=False):
                         positionXYZ[:] = [float(x)*-1 for x in positionXYZ] ## This step is fundamental to obtain a good alignment 
 
                         globals().update({position+str("XYZ") : positionXYZ})
-                        print("We should compare this step with the oldest version:", position+str("XYZ"), positionXYZ)
                         return positionXYZ
             
         

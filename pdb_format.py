@@ -82,13 +82,26 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
 
                         if this_resNum != next_resNum:  
                             print("--> The following gaps have been identified:", this_resNum, " to ",  next_resNum)
-#Descomentar
                             
                             newfile.writelines("TER \n")
 ####
         newfile.write("TER \n")
 
-        #For writing the chromophore                                                                                              
+        #For writing the chromophore                                                                                             
+
+        #Cysteine bounded chromophores  
+        for line in oldfile_read:
+            ls = line.split()
+
+            if chromophoreName != "RET" and chromophoreName != "LYR":
+                if chromophoreName in line:
+                    resNumChr = resNum+1
+                    ln = ln+1
+                    line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumChr), str(""), float(ls[6]),
+                                        float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
+                    newfile.writelines(line+"\n")
+ 
+    #Retinal chromophores
         for i in range(1,21):
             for line in oldfile_read:
                 ls = line.split()
@@ -99,8 +112,9 @@ def FormatPDB(oldFile, newFile, FinalFile, TitlePDB):
                     line = pdbFormat % ("HETATM", int(ln), str(""), ls[2], ls[3],ls[4], int(resNumChr), str(""), float(ls[6]),
                                         float(ls[7]), float(ls[8]), float(ls[9]),str(""),float(ls[10]), ls[11])
                     newfile.writelines(line+"\n")
-        newfile.write("TER \n")
-#        
+    
+            newfile.write("TER \n")
+
         #For writing the waters
         resNumHOH = resNumChr # Residue sequence number        
         for line in oldfile_read:

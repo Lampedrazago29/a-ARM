@@ -23,7 +23,7 @@ def Select_mutation_Software(pdbARM):
     """
     from lib import ChooseNumOption
     
-    mutationSoftwareList = ["Scwrl4", "MODELLER"]
+    mutationSoftwareList = ["Scwrl4"]
     ChooseNumOption(mutationSoftwareList, "mutation_Software", "mutation_Software", '\n Choose the ', 'to perform the mutations:', 'will be used to perform the mutations.', True)
 
 #############################                                                                                                                                                                                    
@@ -282,48 +282,6 @@ def Scwrl4_mutations(mut_pdbARM):
         os.system("pwd")
 #    os.chdir("../")
 
-
-#############################                                                                                                                                                                                                               
-#MODELLER routine                                                                                                                                                                                                                             
-#############################                                                                                                                                                                                                                 
-def modeller_mutations(mut_pdbARM):
-    """
-    This subroutine perfoms the mutation of a single residue, by using MODELLER
-    """
-    from lib import chainName
-    from pdb_format import resNumID
-    from download_PDB import TitlePDB
-    from external_Software import template
-
-    print("mutation_seqmut", mutation_seqmut)
-    for i in range(0,len(mutation_seqmut)):
-        NumIDmut = NumIDmutationsList[i]
-        globals().update({"NumIDmut" : NumIDmut})
-        ResMutName = mutation_seqmut[i][-3:]
-
-    shutil.copyfile(template+"mutate_model.py", "mutate_model.py")
-    script_modeller_mutation = "mutate_model.py"
-
-    print("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
-    os.system("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
-    print( "\n The mutation ", mutation_seqmut[i], "has been succesfully generated!")
-
-#Move the output pdb of modeller to mut_pdbARMTemp
-    shutil.move(mut_pdbARM+"_"+str(ResMutName)+str(NumIDmut)+".pdb",mutation_output)
-
-#Fix the format of the mutation_ouput file                                                                                                                                                                                            
-    FormatPDB1(mutation_output, "mut_temp")
-
-    with open("mut_temp", "r") as out, open("mutation_output", "w") as temp:
-        for line in out:
-            if "ATOM" in line:
-                temp.writelines(line.split()[0]+"\t"+line.split()[1]+"\t"+line.split()[2]+"\t"+line.split()[3]+"\t"+line.split()[4]+"\t"+line.split()[5]+"\t"+line.split()[6]+"\t"+line.split()[7]+"\t"+line.split()[8]+"\t"+line.split()[9]+"\t"+str("0.0")+"\t"+line.split()[2][:1]+"\n")
-    FormatPDB("mutation_output", mutation_output, mutation_output,TitlePDB)
-    os.remove("mut_temp")
-
-    MutatedToARMFormat(mut_pdbARM,NumIDmut, chainName)
-    os.system("pwd")
-
 #############################                                                                                                                                                                                    
 #
 #############################                                                                                                                                                                                  
@@ -419,12 +377,9 @@ def Mutations_procedure(pdbARM,mutation_seqmut):
     Insert_mutations(pdbARM,mutation_seqmut)
 
     from lib import mutation_SoftwareName
-    if mutation_SoftwareName == "MODELLER":
-        modeller_mutations(mut_pdbARM)
-#Start the protonation and counter-ion placement
-        Mutant_prot_addCounterions(mut_pdbARM)
-        os.chdir("../")
-
+    if mutation_SoftwareName == "Modeller":
+        print("We suggest you to use Scwrl4")
+        mutation_SoftwareName == "Scwrl4"
 # #SCWRL4 routine                                                                                                                                                                                               
     if mutation_SoftwareName == "Scwrl4":
          Scwrl4_mutations(mut_pdbARM)

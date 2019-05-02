@@ -6,3 +6,4 @@ pdb2pqr= 'python2.7 /Users/laurapedraza/Documents/Software/apbs-pdb2pqr-master/p
 putIon= '/Users/laurapedraza/Documents/Software/put_ions_good/./ion.x'
 modellerScript = "mod9.20"
 scrl4Script = "Scwrl4"
+template = "/Users/laurapedraza/Documents/GitHub/a-ARM/templates/"

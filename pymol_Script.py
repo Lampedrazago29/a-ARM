@@ -78,8 +78,8 @@ def pyMoLFig(pdbARM,cavityList):
                                 "set ray_trace_mode, 3 \n",
                                 "set ray_shadows, 0 \n",
                                 "set antialias, 2 \n",
-                                "rotate x, -90 \n",
-                                "rotate y, -90 \n",
+                                "#rotate x, -90 \n",
+                                "#rotate y, -90 \n",
                                 "#ray 1200,1200 \n",
                                 "#png "+pdbARM[:-4]+".png \n",
                                 ])

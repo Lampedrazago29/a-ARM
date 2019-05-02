@@ -2,6 +2,7 @@ import os
 
 def countPosNeg(pdbARM,aa1, aa2, aa3, aa4, ION, Charge, List):
     from initial_Setup import counterion_ID, linker_aa_ID, second_counterion_ID
+    from chromophore import chromophoreName
 
     global topCharge, bottomCharge
     topList = []
@@ -15,7 +16,7 @@ def countPosNeg(pdbARM,aa1, aa2, aa3, aa4, ION, Charge, List):
 #Position of the linker amino acid                                              
     with open(pdbARM) as file:
         for line in file:
-            if (aa1 in line or aa2 in line or aa3 in line or aa4 in line) and "CA" in line: #The linker_aa and main_counterion should be conserved in cases where one of them is protonated 
+            if (aa1 in line or aa2 in line or aa3 in line or aa4 in line and chromophoreName not in line) and "CA" in line: #The linker_aa and main_counterion should be conserved in cases where one of them is protonated 
                 if signlinker_aa > 0:
                     resta = (float(line.split()[8]) - float(signlinker_aa))
                     if  (float(line.split()[8]) - float(signlinker_aa)) > 0:
@@ -39,7 +40,7 @@ def countPosNeg(pdbARM,aa1, aa2, aa3, aa4, ION, Charge, List):
 #For CL- ions
     with open(pdbARM) as file:
         for line in file:
-            if ION in line: #The linker_aa and main_counterion should be conserved in cases where one of them is protonated 
+            if ION in line and chromophoreName not in line: #The linker_aa and main_counterion should be conserved in cases where one of them is protonated 
                 if signlinker_aa > 0:
                     resta = (float(line.split()[8]) - float(signlinker_aa))
                     if  (float(line.split()[8]) - float(signlinker_aa)) > 0:

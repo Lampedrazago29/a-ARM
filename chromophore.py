@@ -12,15 +12,17 @@ def LYR_to_RET():
     from initial_Setup import pdbARM, pdbARMTemp
     from Lists_dictionaries import LYRtoRETDictionary, LYRtoLysDictionary
 
-    if chromophoreName == "RET":
+#    if chromophoreName == "RET":
 
-        chromophoreName = "RET"
-        globals().update({"chromophoreName" : chromophoreName})
+#        chromophoreName = "RET"
+#        globals().update({"chromophoreName" : chromophoreName})
 
+
+#    if chromophoreName != "LYR":
+    globals().update({"chromophoreName" : chromophoreName})
 
     if chromophoreName == "LYR":
 #        FormatPDB1(pdbARM, pdbARMTemp ) #Temporal file with spaces                                                                                                                                                                            
-
         pdbARMTemp1 = pdbARMTemp+".1"
 
         with open(pdbARMTemp, "r") as pdbARMTempOld, open(pdbARMTemp1, "w") as pdbARMTempNew:
@@ -51,3 +53,4 @@ def LYR_to_RET():
                 else:
                     pdbARMTempNew.writelines(line)
             shutil.move( pdbARMTemp1, pdbARMTemp)
+

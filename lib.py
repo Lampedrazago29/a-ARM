@@ -182,8 +182,7 @@ def DicResNameNum(group, type, typeList, eraseList, typeDictionary, pick):
 
     globals().update({type+str("Dic") : typeDictionary})
 
-    ChooseNumOption(typeList,type, type, '\n The following are identified as possible', 'in the '+str(pdbName)+ ' \
-file:', 'is selected as the '+type, pick, typeDictionary)
+    ChooseNumOption(typeList,type, type, '\n The following are identified as possible', 'in the '+str(pdbName)+ ' file:', 'is selected as the '+type, pick, typeDictionary)
 
 
 ##################################################                                                                                                                                          

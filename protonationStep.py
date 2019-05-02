@@ -108,7 +108,7 @@ def propKa(pdbName,pdbARM):
         for line in pkaFile:
             for i in range(0, len(protList)):
                 if protList[i] in line.split()[0]:# and linker_aa_ID not in line.split()[1] and counterion_ID not in line.split()[1]:
-                    shift = 1.6
+                    shift = 1.5
                     perc_buried_min = 55 
                     resProtNumID = line.split()[1]
                     pKa_calc = line.split()[2]
