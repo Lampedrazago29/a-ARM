@@ -118,9 +118,9 @@ def mutationsFormat(pdbARM,mutation_seqmut):
 
     #Unifies the format to 3 letter amino acid                                                                                                                                                                      
     for i in range(0,len(mutation_seqmut)):
-        if (mutation_seqmut[i][0]) in oneToThreeDic:
+        if (mutation_seqmut[i][0]) in oneToThreeDic and (mutation_seqmut[i][0]).isdigit():
             mutation_seqmut[i] = mutation_seqmut[i].replace(mutation_seqmut[i][0],oneToThreeDic[mutation_seqmut[i][0]] )
-        if (mutation_seqmut[i][-1:]) in oneToThreeDic:
+        if (mutation_seqmut[i][-1:]) in oneToThreeDic and (mutation_seqmut[i][-2]).isdigit():
             mutation_seqmut[i] = mutation_seqmut[i].replace(mutation_seqmut[i][-1:],oneToThreeDic[mutation_seqmut[i][-1:]] )
 
             globals().update({"mutation_seqmut" : mutation_seqmut})
@@ -294,9 +294,13 @@ def modeller_mutations(mut_pdbARM):
     from pdb_format import resNumID
     from download_PDB import TitlePDB
     from external_Software import template
+    from lib import PickNumber, yes_no
 
     shutil.copyfile(template+"mutate_model.py", "mutate_model.py")
+    shutil.copyfile(template+"external_software_interface.py", "external_software_interface.py")
     script_modeller_mutation = "mutate_model.py"
+
+    rotamers_modeller_folder = "new_modeller_rotamers"
 
     print("mutation_seqmut", mutation_seqmut)
     for i in range(0,len(mutation_seqmut)):
@@ -304,13 +308,38 @@ def modeller_mutations(mut_pdbARM):
         globals().update({"NumIDmut" : NumIDmut})
         ResMutName = mutation_seqmut[i][-3:]
 
-
         print("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
         os.system("python3.7 "+script_modeller_mutation+" "+str(mut_pdbARM)+" "+str(NumIDmut)+" "+str(ResMutName)+" "+chainName+" > "+str(ResMutName)+str(NumIDmut)+".log")
         print( "\n The mutation ", mutation_seqmut[i], "has been succesfully generated!")
 
 #Move the output pdb of modeller to mut_pdbARMTemp
-        shutil.move(mut_pdbARM+"_"+str(ResMutName)+str(NumIDmut)+".pdb",mutation_output)
+        rotamers_a_arm_folder = str(ResMutName)+'-'+str(NumIDmut)+str('_rotamers')+"_"+str(i+1)
+
+        shutil.move(rotamers_modeller_folder+"/", rotamers_a_arm_folder)
+        
+        print("\n --> The following 3 rotamers were found: \n")
+        with open(rotamers_a_arm_folder+"/analysis_rotamers.dat", "r") as analysis_file:
+            for line in analysis_file:
+                print(line)
+#        os.system('cat '+rotamers_a_arm_folder+"/analysis_rotamers.dat")
+        
+        question = yes_no("\n <-> Do you want to select a rotamer different to the default? ")
+#Ask the user for the rotamer
+
+        if question == True:
+            rotamer_choice = PickNumber(3)
+            shutil.copy(rotamers_a_arm_folder+"/best_mutant_modeller_"+str(rotamer_choice)+".pdb", mutation_output)
+            print("The rotamer", str(rotamer_choice), "will be used.")
+
+        if question == False:
+            shutil.copy(rotamers_a_arm_folder+"/best_mutant_modeller_1.pdb", mutation_output)
+            print("\n --> The rotamer", str(1), "was selected.")
+########LMPG
+
+
+####LMPG
+#        shutil.copy(rotamers_a_arm_folder+"/best_mutant_modeller_1.pdb", mutation_output)
+
 
 #Fix the format of the mutation_ouput file                                                                                                                                                                                            
         FormatPDB1(mutation_output, "mut_temp")
@@ -423,6 +452,7 @@ def Mutations_procedure(pdbARM,mutation_seqmut):
     if mutation_SoftwareName == "MODELLER":
         modeller_mutations(mut_pdbARM)
 #Start the protonation and counter-ion placement
+#UNCOMMENT        
         Mutant_prot_addCounterions(mut_pdbARM)
         os.chdir("../")
 
